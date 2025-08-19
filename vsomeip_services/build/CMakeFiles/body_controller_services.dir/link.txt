@@ -1,0 +1,1 @@
+/usr/bin/c++  -Wall -Wextra -O2 CMakeFiles/body_controller_services.dir/src/main.cpp.o -o bin/body_controller_services   -L/usr/local/lib  -Wl,-rpath,/usr/local/lib: libbody_services.a libservices_common.a -lvsomeip3 

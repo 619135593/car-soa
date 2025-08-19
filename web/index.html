@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>车身域控制器系统</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1>🚗 车身域控制器系统</h1>
+                <div class="status-bar">
+                    <div class="connection-status">
+                        <span class="status-indicator" id="connectionStatus"></span>
+                        <span id="connectionText">连接中...</span>
+                    </div>
+                    <div class="system-info">
+                        <button class="theme-toggle" id="themeToggle" onclick="app.toggleTheme()" title="切换主题">
+                            <span class="theme-icon">🌙</span>
+                        </button>
+                        <span class="system-status" id="systemStatus">系统正常</span>
+                        <span class="system-time" id="systemTime"></span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="control-panels">
+                <!-- 车门控制面板 -->
+                <div class="control-panel" id="doorPanel">
+                    <div class="panel-header">
+                        <h2>🚪 车门控制</h2>
+                        <div class="panel-actions">
+                            <button class="btn btn-small btn-secondary" onclick="app.lockAllDoors()">全部锁定</button>
+                            <button class="btn btn-small btn-secondary" onclick="app.unlockAllDoors()">全部解锁</button>
+                        </div>
+                    </div>
+                    <div class="door-controls">
+                        <div class="door-item" data-door="0">
+                            <div class="door-header">
+                                <h3>前左门</h3>
+                                <div class="door-status">
+                                    <span class="status-badge lock-status" id="doorLock0">未知</span>
+                                    <span class="status-badge door-state" id="doorState0">未知</span>
+                                </div>
+                            </div>
+                            <div class="door-buttons">
+                                <button class="btn btn-lock" onclick="app.lockDoor(0, 1)">🔒 锁定</button>
+                                <button class="btn btn-unlock" onclick="app.lockDoor(0, 0)">🔓 解锁</button>
+                            </div>
+                        </div>
+                        
+                        <div class="door-item" data-door="1">
+                            <div class="door-header">
+                                <h3>前右门</h3>
+                                <div class="door-status">
+                                    <span class="status-badge lock-status" id="doorLock1">未知</span>
+                                    <span class="status-badge door-state" id="doorState1">未知</span>
+                                </div>
+                            </div>
+                            <div class="door-buttons">
+                                <button class="btn btn-lock" onclick="app.lockDoor(1, 1)">🔒 锁定</button>
+                                <button class="btn btn-unlock" onclick="app.lockDoor(1, 0)">🔓 解锁</button>
+                            </div>
+                        </div>
+                        
+                        <div class="door-item" data-door="2">
+                            <div class="door-header">
+                                <h3>后左门</h3>
+                                <div class="door-status">
+                                    <span class="status-badge lock-status" id="doorLock2">未知</span>
+                                    <span class="status-badge door-state" id="doorState2">未知</span>
+                                </div>
+                            </div>
+                            <div class="door-buttons">
+                                <button class="btn btn-lock" onclick="app.lockDoor(2, 1)">🔒 锁定</button>
+                                <button class="btn btn-unlock" onclick="app.lockDoor(2, 0)">🔓 解锁</button>
+                            </div>
+                        </div>
+                        
+                        <div class="door-item" data-door="3">
+                            <div class="door-header">
+                                <h3>后右门</h3>
+                                <div class="door-status">
+                                    <span class="status-badge lock-status" id="doorLock3">未知</span>
+                                    <span class="status-badge door-state" id="doorState3">未知</span>
+                                </div>
+                            </div>
+                            <div class="door-buttons">
+                                <button class="btn btn-lock" onclick="app.lockDoor(3, 1)">🔒 锁定</button>
+                                <button class="btn btn-unlock" onclick="app.lockDoor(3, 0)">🔓 解锁</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 车窗控制面板 -->
+                <div class="control-panel" id="windowPanel">
+                    <div class="panel-header">
+                        <h2>🪟 车窗控制</h2>
+                    </div>
+                    <div class="window-controls">
+                        <div class="window-item" data-window="0">
+                            <div class="window-header">
+                                <h3>前左窗</h3>
+                                <div class="window-position">
+                                    <span class="position-text" id="windowPos0">位置: 未知</span>
+                                </div>
+                            </div>
+                            <div class="window-slider">
+                                <input type="range" min="0" max="100" value="50" 
+                                       class="position-slider" id="windowSlider0" 
+                                       onchange="app.setWindowPosition(0, this.value)">
+                                <div class="slider-labels">
+                                    <span>关闭</span>
+                                    <span>打开</span>
+                                </div>
+                            </div>
+                            <div class="window-buttons">
+                                <button class="btn btn-small" onclick="app.controlWindow(0, 0)">⬆️ 上升</button>
+                                <button class="btn btn-small" onclick="app.controlWindow(0, 2)">⏹️ 停止</button>
+                                <button class="btn btn-small" onclick="app.controlWindow(0, 1)">⬇️ 下降</button>
+                            </div>
+                        </div>
+                        
+                        <div class="window-item" data-window="1">
+                            <div class="window-header">
+                                <h3>前右窗</h3>
+                                <div class="window-position">
+                                    <span class="position-text" id="windowPos1">位置: 未知</span>
+                                </div>
+                            </div>
+                            <div class="window-slider">
+                                <input type="range" min="0" max="100" value="50" 
+                                       class="position-slider" id="windowSlider1" 
+                                       onchange="app.setWindowPosition(1, this.value)">
+                                <div class="slider-labels">
+                                    <span>关闭</span>
+                                    <span>打开</span>
+                                </div>
+                            </div>
+                            <div class="window-buttons">
+                                <button class="btn btn-small" onclick="app.controlWindow(1, 0)">⬆️ 上升</button>
+                                <button class="btn btn-small" onclick="app.controlWindow(1, 2)">⏹️ 停止</button>
+                                <button class="btn btn-small" onclick="app.controlWindow(1, 1)">⬇️ 下降</button>
+                            </div>
+                        </div>
+                        
+                        <div class="window-item" data-window="2">
+                            <div class="window-header">
+                                <h3>后左窗</h3>
+                                <div class="window-position">
+                                    <span class="position-text" id="windowPos2">位置: 未知</span>
+                                </div>
+                            </div>
+                            <div class="window-slider">
+                                <input type="range" min="0" max="100" value="50" 
+                                       class="position-slider" id="windowSlider2" 
+                                       onchange="app.setWindowPosition(2, this.value)">
+                                <div class="slider-labels">
+                                    <span>关闭</span>
+                                    <span>打开</span>
+                                </div>
+                            </div>
+                            <div class="window-buttons">
+                                <button class="btn btn-small" onclick="app.controlWindow(2, 0)">⬆️ 上升</button>
+                                <button class="btn btn-small" onclick="app.controlWindow(2, 2)">⏹️ 停止</button>
+                                <button class="btn btn-small" onclick="app.controlWindow(2, 1)">⬇️ 下降</button>
+                            </div>
+                        </div>
+                        
+                        <div class="window-item" data-window="3">
+                            <div class="window-header">
+                                <h3>后右窗</h3>
+                                <div class="window-position">
+                                    <span class="position-text" id="windowPos3">位置: 未知</span>
+                                </div>
+                            </div>
+                            <div class="window-slider">
+                                <input type="range" min="0" max="100" value="50" 
+                                       class="position-slider" id="windowSlider3" 
+                                       onchange="app.setWindowPosition(3, this.value)">
+                                <div class="slider-labels">
+                                    <span>关闭</span>
+                                    <span>打开</span>
+                                </div>
+                            </div>
+                            <div class="window-buttons">
+                                <button class="btn btn-small" onclick="app.controlWindow(3, 0)">⬆️ 上升</button>
+                                <button class="btn btn-small" onclick="app.controlWindow(3, 2)">⏹️ 停止</button>
+                                <button class="btn btn-small" onclick="app.controlWindow(3, 1)">⬇️ 下降</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 灯光控制面板 -->
+                <div class="control-panel" id="lightPanel">
+                    <div class="panel-header">
+                        <h2>💡 灯光控制</h2>
+                    </div>
+                    <div class="light-controls">
+                        <div class="light-group">
+                            <h3>前大灯</h3>
+                            <div class="light-status">
+                                <span class="status-badge" id="headlightStatus">关闭</span>
+                            </div>
+                            <div class="light-buttons">
+                                <button class="btn btn-light" onclick="app.setHeadlight(0)">关闭</button>
+                                <button class="btn btn-light" onclick="app.setHeadlight(1)">近光</button>
+                                <button class="btn btn-light" onclick="app.setHeadlight(2)">远光</button>
+                            </div>
+                        </div>
+                        
+                        <div class="light-group">
+                            <h3>转向灯</h3>
+                            <div class="light-status">
+                                <span class="status-badge" id="indicatorStatus">关闭</span>
+                            </div>
+                            <div class="light-buttons">
+                                <button class="btn btn-light" onclick="app.setIndicator(0)">关闭</button>
+                                <button class="btn btn-light" onclick="app.setIndicator(1)">⬅️ 左转</button>
+                                <button class="btn btn-light" onclick="app.setIndicator(2)">➡️ 右转</button>
+                                <button class="btn btn-light" onclick="app.setIndicator(3)">⚠️ 双闪</button>
+                            </div>
+                        </div>
+                        
+                        <div class="light-group">
+                            <h3>位置灯</h3>
+                            <div class="light-status">
+                                <span class="status-badge" id="positionLightStatus">关闭</span>
+                            </div>
+                            <div class="light-buttons">
+                                <button class="btn btn-light" onclick="app.setPositionLight(0)">关闭</button>
+                                <button class="btn btn-light" onclick="app.setPositionLight(1)">开启</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 座椅控制面板 -->
+                <div class="control-panel" id="seatPanel">
+                    <div class="panel-header">
+                        <h2>🪑 座椅控制</h2>
+                    </div>
+                    <div class="seat-controls">
+                        <div class="seat-group">
+                            <h3>座椅调节</h3>
+                            <div class="seat-adjust">
+                                <div class="adjust-row">
+                                    <label>前后调节:</label>
+                                    <div class="adjust-buttons">
+                                        <button class="btn btn-small" onclick="app.adjustSeat(0, 0)">⬅️ 向前</button>
+                                        <button class="btn btn-small" onclick="app.adjustSeat(0, 2)">⏹️ 停止</button>
+                                        <button class="btn btn-small" onclick="app.adjustSeat(0, 1)">➡️ 向后</button>
+                                    </div>
+                                </div>
+                                <div class="adjust-row">
+                                    <label>靠背调节:</label>
+                                    <div class="adjust-buttons">
+                                        <button class="btn btn-small" onclick="app.adjustSeat(1, 0)">⬆️ 直立</button>
+                                        <button class="btn btn-small" onclick="app.adjustSeat(1, 2)">⏹️ 停止</button>
+                                        <button class="btn btn-small" onclick="app.adjustSeat(1, 1)">⬇️ 后倾</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="seat-group">
+                            <h3>记忆位置</h3>
+                            <div class="memory-controls">
+                                <div class="memory-row">
+                                    <label>恢复位置:</label>
+                                    <div class="memory-buttons">
+                                        <button class="btn btn-memory" onclick="app.recallMemoryPosition(1)">位置1</button>
+                                        <button class="btn btn-memory" onclick="app.recallMemoryPosition(2)">位置2</button>
+                                        <button class="btn btn-memory" onclick="app.recallMemoryPosition(3)">位置3</button>
+                                    </div>
+                                </div>
+                                <div class="memory-row">
+                                    <label>保存位置:</label>
+                                    <div class="memory-buttons">
+                                        <button class="btn btn-memory-save" onclick="app.saveMemoryPosition(1)">保存1</button>
+                                        <button class="btn btn-memory-save" onclick="app.saveMemoryPosition(2)">保存2</button>
+                                        <button class="btn btn-memory-save" onclick="app.saveMemoryPosition(3)">保存3</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 活动日志面板 -->
+            <div class="activity-log">
+                <div class="log-header">
+                    <h2>📋 活动日志</h2>
+                    <div class="log-actions">
+                        <button class="btn btn-small btn-secondary" onclick="app.clearLog()">清空日志</button>
+                        <button class="btn btn-small btn-secondary" onclick="app.exportLog()">导出日志</button>
+                    </div>
+                </div>
+                <div class="log-content" id="logContent">
+                    <div class="log-item log-info">
+                        <span class="log-time">--:--:--</span>
+                        <span class="log-message">系统启动中...</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- 加载指示器 -->
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">连接中...</div>
+        </div>
+        
+        <!-- 错误提示 -->
+        <div class="error-toast" id="errorToast">
+            <div class="toast-content">
+                <span class="toast-icon">⚠️</span>
+                <span class="toast-message" id="errorMessage"></span>
+                <button class="toast-close" onclick="app.hideError()">×</button>
+            </div>
+        </div>
+        
+        <!-- 成功提示 -->
+        <div class="success-toast" id="successToast">
+            <div class="toast-content">
+                <span class="toast-icon">✅</span>
+                <span class="toast-message" id="successMessage"></span>
+                <button class="toast-close" onclick="app.hideSuccess()">×</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 脚本文件 -->
+    <script src="js/api.js"></script>
+    <script src="js/sse.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

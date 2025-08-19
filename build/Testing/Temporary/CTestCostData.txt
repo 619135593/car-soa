@@ -1,0 +1,5 @@
+test_door_client_help 1 9.20438
+test_window_client_help 1 21.6127
+test_light_client_help 1 35.1774
+test_seat_client_help 1 50.2162
+---

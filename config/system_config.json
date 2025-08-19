@@ -1,0 +1,255 @@
+{
+    "system": {
+        "name": "Body Controller System",
+        "version": "1.0.0",
+        "description": "车身域控制器系统 - 电脑端",
+        "log_level": "info",
+        "log_file": "/tmp/body_controller.log"
+    },
+    "network": {
+        "pc_node": {
+            "ip_address": "192.168.3.10",
+            "mac_address": "08-97-98-C2-A8-B0",
+            "interface": "eth1"
+        },
+        "stm32_node": {
+            "ip_address": "192.168.3.11",
+            "mac_address": "TBD",
+            "connection_timeout_ms": 5000,
+            "ping_interval_ms": 1000
+        }
+    },
+    "web_server": {
+        "enabled": true,
+        "host": "0.0.0.0",
+        "port": 8080,
+        "document_root": "./web",
+        "api_prefix": "/api/v1",
+        "websocket_endpoint": "/ws",
+        "cors_enabled": true,
+        "cors_origins": ["*"],
+        "request_timeout_ms": 30000,
+        "max_connections": 100
+    },
+    "someip": {
+        "config_file": "./config/vsomeip.json",
+        "application_name": "body_controller",
+        "application_id": "0x1000",
+        "method_call_timeout_ms": 5000,
+        "service_discovery_timeout_ms": 10000,
+        "connection_retry_interval_ms": 2000,
+        "max_retry_attempts": 5
+    },
+    "services": {
+        "window_service": {
+            "service_id": "0x1001",
+            "instance_id": "0x1001",
+            "enabled": true,
+            "auto_subscribe_events": true,
+            "methods": {
+                "set_window_position": {
+                    "method_id": "0x0001",
+                    "timeout_ms": 3000
+                },
+                "control_window": {
+                    "method_id": "0x0002",
+                    "timeout_ms": 3000
+                },
+                "get_window_position": {
+                    "method_id": "0x0003",
+                    "timeout_ms": 2000
+                }
+            },
+            "events": {
+                "on_window_position_changed": {
+                    "event_id": "0x8001",
+                    "eventgroup_id": "0x0001"
+                }
+            }
+        },
+        "door_service": {
+            "service_id": "0x1002",
+            "instance_id": "0x1002",
+            "enabled": true,
+            "auto_subscribe_events": true,
+            "methods": {
+                "set_lock_state": {
+                    "method_id": "0x0001",
+                    "timeout_ms": 3000
+                },
+                "get_lock_state": {
+                    "method_id": "0x0002",
+                    "timeout_ms": 2000
+                }
+            },
+            "events": {
+                "on_lock_state_changed": {
+                    "event_id": "0x8001",
+                    "eventgroup_id": "0x0001"
+                },
+                "on_door_state_changed": {
+                    "event_id": "0x8002",
+                    "eventgroup_id": "0x0001"
+                }
+            }
+        },
+        "light_service": {
+            "service_id": "0x1003",
+            "instance_id": "0x1003",
+            "enabled": true,
+            "auto_subscribe_events": true,
+            "methods": {
+                "set_headlight_state": {
+                    "method_id": "0x0001",
+                    "timeout_ms": 2000
+                },
+                "set_indicator_state": {
+                    "method_id": "0x0002",
+                    "timeout_ms": 2000
+                },
+                "set_position_light_state": {
+                    "method_id": "0x0003",
+                    "timeout_ms": 2000
+                }
+            },
+            "events": {
+                "on_light_state_changed": {
+                    "event_id": "0x8001",
+                    "eventgroup_id": "0x0001"
+                }
+            }
+        },
+        "seat_service": {
+            "service_id": "0x1004",
+            "instance_id": "0x1004",
+            "enabled": true,
+            "auto_subscribe_events": true,
+            "methods": {
+                "adjust_seat": {
+                    "method_id": "0x0001",
+                    "timeout_ms": 5000
+                },
+                "recall_memory_position": {
+                    "method_id": "0x0002",
+                    "timeout_ms": 3000
+                },
+                "save_memory_position": {
+                    "method_id": "0x0003",
+                    "timeout_ms": 3000
+                }
+            },
+            "events": {
+                "on_seat_position_changed": {
+                    "event_id": "0x8001",
+                    "eventgroup_id": "0x0001"
+                },
+                "on_memory_save_confirm": {
+                    "event_id": "0x8002",
+                    "eventgroup_id": "0x0001"
+                }
+            }
+        }
+    },
+    "monitoring": {
+        "enabled": true,
+        "health_check_interval_ms": 5000,
+        "performance_metrics": {
+            "enabled": true,
+            "collection_interval_ms": 1000,
+            "max_history_entries": 1000
+        },
+        "error_tracking": {
+            "enabled": true,
+            "max_error_history": 100,
+            "error_threshold": 10
+        }
+    },
+    "security": {
+        "enable_authentication": false,
+        "enable_encryption": false,
+        "allowed_ips": ["192.168.3.0/24"],
+        "rate_limiting": {
+            "enabled": true,
+            "max_requests_per_minute": 60
+        }
+    },
+    "development": {
+        "debug_mode": true,
+        "mock_stm32": false,
+        "verbose_logging": true,
+        "enable_test_endpoints": true,
+        "auto_reload_config": true
+    },
+    "vehicle_config": {
+        "windows": {
+            "front_left": {
+                "enabled": true,
+                "min_position": 0,
+                "max_position": 100,
+                "step_size": 5
+            },
+            "front_right": {
+                "enabled": true,
+                "min_position": 0,
+                "max_position": 100,
+                "step_size": 5
+            },
+            "rear_left": {
+                "enabled": true,
+                "min_position": 0,
+                "max_position": 100,
+                "step_size": 5
+            },
+            "rear_right": {
+                "enabled": true,
+                "min_position": 0,
+                "max_position": 100,
+                "step_size": 5
+            }
+        },
+        "doors": {
+            "front_left": {
+                "enabled": true,
+                "has_lock": true,
+                "has_position_sensor": true
+            },
+            "front_right": {
+                "enabled": true,
+                "has_lock": true,
+                "has_position_sensor": true
+            },
+            "rear_left": {
+                "enabled": true,
+                "has_lock": true,
+                "has_position_sensor": true
+            },
+            "rear_right": {
+                "enabled": true,
+                "has_lock": true,
+                "has_position_sensor": true
+            }
+        },
+        "lights": {
+            "headlight": {
+                "enabled": true,
+                "supports_high_beam": true
+            },
+            "indicator": {
+                "enabled": true,
+                "supports_hazard": true
+            },
+            "position_light": {
+                "enabled": true
+            }
+        },
+        "seat": {
+            "enabled": true,
+            "memory_positions": 3,
+            "adjustment_axes": ["forward_backward", "recline"],
+            "position_range": {
+                "min": 0,
+                "max": 100
+            }
+        }
+    }
+}

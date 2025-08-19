@@ -1,0 +1,13 @@
+/home/zz/car/build/CMakeFiles/body_controller_lib.dir
+/home/zz/car/build/CMakeFiles/test_door_client.dir
+/home/zz/car/build/CMakeFiles/test_window_client.dir
+/home/zz/car/build/CMakeFiles/test_light_client.dir
+/home/zz/car/build/CMakeFiles/test_seat_client.dir
+/home/zz/car/build/CMakeFiles/body_controller_web_server.dir
+/home/zz/car/build/CMakeFiles/test.dir
+/home/zz/car/build/CMakeFiles/edit_cache.dir
+/home/zz/car/build/CMakeFiles/rebuild_cache.dir
+/home/zz/car/build/CMakeFiles/list_install_components.dir
+/home/zz/car/build/CMakeFiles/install.dir
+/home/zz/car/build/CMakeFiles/install/local.dir
+/home/zz/car/build/CMakeFiles/install/strip.dir

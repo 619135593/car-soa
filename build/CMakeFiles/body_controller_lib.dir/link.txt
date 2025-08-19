@@ -1,0 +1,2 @@
+/usr/bin/ar qc lib/libbody_controller_lib.a CMakeFiles/body_controller_lib.dir/src/communication/someip_client.cpp.o CMakeFiles/body_controller_lib.dir/src/communication/door_service_client.cpp.o CMakeFiles/body_controller_lib.dir/src/communication/window_service_client.cpp.o CMakeFiles/body_controller_lib.dir/src/communication/light_service_client.cpp.o CMakeFiles/body_controller_lib.dir/src/communication/seat_service_client.cpp.o
+/usr/bin/ranlib lib/libbody_controller_lib.a

@@ -1,0 +1,2 @@
+/usr/bin/ar qc libbody_services.a CMakeFiles/body_services.dir/src/services/door_service.cpp.o CMakeFiles/body_services.dir/src/services/window_service.cpp.o CMakeFiles/body_services.dir/src/services/light_service.cpp.o CMakeFiles/body_services.dir/src/services/seat_service.cpp.o CMakeFiles/body_services.dir/src/services/service_manager.cpp.o
+/usr/bin/ranlib libbody_services.a

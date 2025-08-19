@@ -1,0 +1,2 @@
+/usr/bin/ar qc libservices_common.a CMakeFiles/services_common.dir/src/common/serializer.cpp.o CMakeFiles/services_common.dir/src/common/hardware_simulator.cpp.o
+/usr/bin/ranlib libservices_common.a
